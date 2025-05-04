@@ -3,7 +3,8 @@
 import { useDeviceStore } from "@/store/deviceStore";
 import { useState } from "react";
 import { FilterDialogs } from "./FilterDialogs";
-import { devices, deviceBrands, deviceTypes } from "@/data";
+import { devices } from "@/data";
+import { Device } from "./Device";
 
 const FilterIcon = () => (
 	<svg
@@ -45,16 +46,6 @@ export const DevicesTable = () => {
 	};
 
 	const filteredDevices = store.filteredDevices(devices);
-
-	const getBrandName = (brandId?: number) => {
-		if (!brandId) return "-";
-		return deviceBrands.find((brand) => brand.id === brandId)?.name || "-";
-	};
-
-	const getTypeName = (typeId?: number) => {
-		if (!typeId) return "-";
-		return deviceTypes.find((type) => type.id === typeId)?.name || "-";
-	};
 
 	return (
 		<div className="space-y-4">
@@ -167,75 +158,7 @@ export const DevicesTable = () => {
 					</thead>
 					<tbody className="bg-white divide-y divide-gray-200">
 						{filteredDevices.map((device) => (
-							<tr key={device.id}>
-								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-									{device.id}
-								</td>
-								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-									<div className="flex gap-2 items-center">
-										<span>{device.model || "-"}</span>
-										{device.link && (
-											<a
-												href={device.link}
-												target="_blank"
-												rel="noopener noreferrer"
-												className="text-blue-500 hover:text-blue-700 cursor-pointer"
-											>
-												<svg
-													xmlns="http://www.w3.org/2000/svg"
-													className="h-4 w-4"
-													fill="none"
-													viewBox="0 0 24 24"
-													stroke="currentColor"
-												>
-													<path
-														strokeLinecap="round"
-														strokeLinejoin="round"
-														strokeWidth={2}
-														d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-													/>
-												</svg>
-											</a>
-										)}
-									</div>
-								</td>
-								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-									{device.price ? `${device.price} ₽` : "-"}
-								</td>
-								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-									{getBrandName(device.brand)}
-								</td>
-								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-									{device.variation || "-"}
-								</td>
-								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-									{getTypeName(device.deviceType)}
-								</td>
-								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-									{device.comment ? (
-										<div
-											className="max-w-[200px] truncate"
-											title={device.comment}
-										>
-											{device.comment}
-										</div>
-									) : (
-										"-"
-									)}
-								</td>
-								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-									{device.description ? (
-										<div
-											className="max-w-[300px] truncate"
-											title={device.description}
-										>
-											{device.description}
-										</div>
-									) : (
-										"-"
-									)}
-								</td>
-							</tr>
+							<Device key={device.id} {...device} />
 						))}
 					</tbody>
 				</table>

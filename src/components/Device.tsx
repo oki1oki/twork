@@ -17,17 +17,19 @@ export interface IDevice {
 
 export const Device = (props: IDevice) => {
 	return (
-		<tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-			<td className="px-6 py-4">{props.id}</td>
-			<td className="px-6 py-4">
-				<div className="font-medium flex gap-2 items-center">
-					<p>{props.model ?? "-"}</p>
+		<tr className="bg-white divide-y divide-gray-200">
+			<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+				{props.id}
+			</td>
+			<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+				<div className="flex gap-2 items-center">
+					<span>{props.model || "-"}</span>
 					{props.link && (
 						<a
 							href={props.link}
 							target="_blank"
 							rel="noopener noreferrer"
-							className="text-blue-500 hover:text-blue-700"
+							className="text-blue-500 hover:text-blue-700 cursor-pointer"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -47,22 +49,46 @@ export const Device = (props: IDevice) => {
 					)}
 				</div>
 			</td>
-			<td className="px-6 py-4">
+			<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
 				{props.price ? `${props.price} ₽` : "-"}
 			</td>
-			<td className="px-6 py-4">
+			<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
 				{props.brand
 					? deviceBrands.find((i) => i.id == props.brand)?.name
 					: "-"}
 			</td>
-			<td className="px-6 py-4">{props.variation ?? "-"}</td>
-			<td className="px-6 py-4">
+			<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+				{props.variation || "-"}
+			</td>
+			<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
 				{props.deviceType
 					? deviceTypes.find((i) => i.id == props.deviceType)?.name
 					: "-"}
 			</td>
-			<td className="px-6 py-4">{props.comment ?? "-"}</td>
-			<td className="px-6 py-4">{props.description ?? "-"}</td>
+			<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+				{props.comment ? (
+					<div
+						className="max-w-[200px] truncate"
+						title={props.comment}
+					>
+						{props.comment}
+					</div>
+				) : (
+					"-"
+				)}
+			</td>
+			<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+				{props.description ? (
+					<div
+						className="max-w-[300px] truncate"
+						title={props.description}
+					>
+						{props.description}
+					</div>
+				) : (
+					"-"
+				)}
+			</td>
 		</tr>
 	);
 };
